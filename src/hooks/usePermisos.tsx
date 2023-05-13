@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { PermissionsAndroid } from 'react-native';
 
-function usePermisos(tipoPermiso : string) {
+function usePermisos(tipoPermiso : string, siguientePantalla : any) {
   const [permisos, setPermisos] = useState(false);
   const [recargar, setRecargar] = useState(false);
   const getPermisos = async () => {
@@ -18,6 +18,7 @@ function usePermisos(tipoPermiso : string) {
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           setPermisos(true);
+          siguientePantalla();
         } else {
           setPermisos(false);
         }

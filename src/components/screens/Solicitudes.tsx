@@ -57,7 +57,7 @@ const Solicitudes = (props : any)=>{
     permisos : muestra el estado del permiso : true (permitido), false (no permitido)
     setRecargar : permite recargar los permisos
     */
-    const [ permisos, setRecargar ] = usePermisos(tipoNotificacion);
+    const [ permisos, setRecargar ] = usePermisos(tipoNotificacion,siguientePantalla);
     const handleRecargar = ()=>{
         setRecargar(true);
     }
