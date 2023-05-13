@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import usePermisos from "../../hooks/usePermisos";
 import ButtonGradient from '../forms/ButtonGradient';
 import ButtonWhite from '../forms/ButtonWhite';
@@ -6,6 +6,7 @@ import cameraImage from '../../assets/artwork3.png';
 import notificationImage from '../../assets/artwork2.png';
 import gpsImage from '../../assets/artwork1.png';
 import { useEffect, useState } from 'react';
+import solicitudesStyles from '../styles/solicitudesStyles';
 /* Contiene la informacion de cada pantalla de permisos */
 const accessInformation = {
     camera : {
@@ -62,84 +63,28 @@ const Solicitudes = (props : any)=>{
         setRecargar(true);
     }
     
-    
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
-        section: {
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
-        imageContainer: {
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: 200,
-            height: 200,
-            top : '70%'
-        },
-        image: {
-            width: '100%',
-            height: '100%',
-            resizeMode: 'contain',
-        },
-        title: {
-            fontSize: 24,
-            fontWeight: 'bold',
-            textAlign: 'center',
-        },
-        text: {
-            fontSize: 20,
-            textAlign: 'center',
-        },
-        buttonContainer: {
-            flexDirection: 'column',
-            justifyContent: 'center',
-        },
-        titleContainer : {
-            top : '50%'
-        },
-        textContainer : {
-            width : '60%'
-        },
-        button: {
-            backgroundColor: 'blue',
-            padding: 10,
-            margin: 5,
-            borderRadius: 5,
-        },
-        buttonText: {
-            color: 'white',
-            fontSize: 16,
-            fontWeight: 'bold',
-        },
-    });
-    
     return (
-        <View style={styles.container}>
-            <View style={styles.section}>
-            <View style={styles.imageContainer}>
+        <View style={solicitudesStyles.container}>
+            <View style={solicitudesStyles.section}>
+            <View style={solicitudesStyles.imageContainer}>
                 { image&&(
-                    <Image source={image} style={styles.image} />
+                    <Image source={image} style={solicitudesStyles.image} />
                 ) }
             </View>
             </View>
-            <View style={styles.section}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>{title}</Text>
+            <View style={solicitudesStyles.section}>
+            <View style={solicitudesStyles.titleContainer}>
+                <Text style={solicitudesStyles.title}>{title}</Text>
             </View>
             </View>
-            <View style={styles.section}>
-            <View style={styles.textContainer}>
-                <Text style={styles.text}>{description}</Text>
+            <View style={solicitudesStyles.section}>
+            <View style={solicitudesStyles.textContainer}>
+                <Text style={solicitudesStyles.text}>{description}</Text>
             </View>
             
             </View>
-            <View style={styles.section}>
-            <View style={styles.buttonContainer}>
+            <View style={solicitudesStyles.section}>
+            <View style={solicitudesStyles.buttonContainer}>
                 <ButtonGradient title={permisos?'Enable':'Allow'} onPress={()=>handleRecargar()}/>
                 <ButtonWhite title='Cancel' onPress={()=>siguientePantalla()}/>
             </View>
