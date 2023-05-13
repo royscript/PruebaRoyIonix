@@ -11,6 +11,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Notification from './src/components/screens/Notification';
 import Gps from './src/components/screens/Gps';
+import Loading from './src/components/screens/Loading';
 const Stack = createNativeStackNavigator();
 function App(): JSX.Element {
 
@@ -19,7 +20,8 @@ function App(): JSX.Element {
   },[])
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="AccessCamera">
+      <Stack.Navigator initialRouteName="Loading">
+      <Stack.Screen name="Loading" component={Loading} />
         <Stack.Screen name="AccessCamera" component={Camera} />
         <Stack.Screen name="AccessNotificacion" component={Notification} />
         <Stack.Screen name="AccessGps" component={Gps} />
