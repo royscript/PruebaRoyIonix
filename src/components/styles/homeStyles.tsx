@@ -9,7 +9,7 @@ const homeStyles = StyleSheet.create({
     },
     searchInput:{
         height: 45,
-        paddingLeft: 30,
+        paddingLeft: 45,
         paddingTop : 10,
         fontSize : 18,
         fontFamily : 'ABeeZee'
@@ -40,14 +40,15 @@ const homeStyles = StyleSheet.create({
       borderWidth: 1,
       borderColor: '#EDEDED',
       borderRadius: 5,
-      top: '10%',
+      top: 42,
       backgroundColor : '#EDEDED',
       color : "#636363",
       fontSize: 20
     },
     cardContainer:{
         width : '100%',
-        padding : 10
+        paddingLeft : 10,
+        paddingRight : 10,
     },
     card: {
         borderWidth: 0.5,
@@ -87,13 +88,15 @@ const homeStyles = StyleSheet.create({
         flex: 0.6,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingRight : 1
+        paddingRight : 1,
     },
     title: {
       fontSize: 24,
-      fontWeight: 'bold',
       marginVertical: 23,
-      marginLeft : 55
+      marginLeft : 55,
+      height : 90,
+      width : 290,
+      fontFamily : 'HelveticaNeue'
     },
     
     iconContainer: {
