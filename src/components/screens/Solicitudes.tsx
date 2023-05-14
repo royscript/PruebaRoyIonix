@@ -26,7 +26,7 @@ const accessInformation = {
     }
 }
 const Solicitudes = (props : any)=>{
-    const { tipoNotificacion, siguientePantalla } = props;
+    const { tipoNotificacion, siguientePantalla, setPermiso } = props;
     const [ title, setTitle ] = useState('');
     const [ description, setDescription ] = useState('');
     const [ image, setImage ] = useState(null);
@@ -62,7 +62,9 @@ const Solicitudes = (props : any)=>{
     const handleRecargar = ()=>{
         setRecargar(true);
     }
-    
+    useEffect(()=>{
+        setPermiso(permisos)
+    },[permisos])
     return (
         <View style={solicitudesStyles.container}>
             <View style={solicitudesStyles.section}>

@@ -1,10 +1,27 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useEffect } from 'react';
 import Solicitudes from './Solicitudes';
+import { setPermisoNotification } from '../redux/notificactionSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
-const Notification = ({ navigation })=>{
+function Notification({ navigation }): JSX.Element {
+    const permisoNotification = useSelector(state => state.notificacion.permisoNotification);
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        console.log("permiso Notificacion :"+permisoNotification);
+    },[]);
     useLayoutEffect(() => {
-        navigation.setOptions({ headerShown: false });
+      navigation.setOptions({ headerShown: false });
     }, [navigation]);
-    return <Solicitudes tipoNotificacion='POST_NOTIFICATIONS' siguientePantalla={()=>navigation.navigate('AccessGps')}/>
+  
+    const handlePermisoNotificacion = () => {
+      navigation.navigate('AccessGps');
+    }
+    return <Solicitudes 
+                        setPermiso={(permiso)=>{
+                            dispatch(setPermisoNotification(permiso));
+                        }}
+                        tipoNotificacion='POST_NOTIFICATIONS' 
+                        siguientePantalla={handlePermisoNotificacion} 
+            />
 }
 export default Notification;

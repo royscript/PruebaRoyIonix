@@ -1,10 +1,28 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setPermisoGps } from '../redux/gpsSlice';
 import Solicitudes from './Solicitudes';
 
-const Gps = ({ navigation })=>{
-    useLayoutEffect(() => {
-        navigation.setOptions({ headerShown: false });
-    }, [navigation]);
-    return <Solicitudes tipoNotificacion='ACCESS_FINE_LOCATION' siguientePantalla={()=>navigation.navigate('Home')}/>
+function Gps({ navigation }): JSX.Element {
+  const permisoGps = useSelector(state => state.gps.permisoGps);
+  const dispatch = useDispatch();
+  useEffect(()=>{
+      console.log("permiso Gps :"+permisoGps);
+  },[]);
+  useLayoutEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
+  const handlePermisoGps = () => {
+    navigation.navigate('Home');
+  }
+
+  return <Solicitudes 
+                    setPermiso={(permiso)=>{
+                        dispatch(setPermisoGps(permiso));
+                    }}
+                    tipoNotificacion='ACCESS_FINE_LOCATION' 
+                    siguientePantalla={handlePermisoGps} />
 }
+
 export default Gps;

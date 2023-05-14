@@ -1,55 +1,73 @@
-import { View, Image, TouchableOpacity, TextInput  } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, TouchableOpacity, Keyboard } from 'react-native';
+import Memes from '../apis/Memes';
 import homeStyles from '../styles/homeStyles';
 import configIcon from '../../assets/bitmap.png';
 import searchIcon from '../../assets/search.png';
-import Memes from '../apis/Memes';
 import FlatListHome from './FlatListHome';
 import SearchBar from '../forms/SearchBar';
 import CargaDatos from '../forms/CargaDatos';
-import React, { useEffect, useState } from 'react';
+
+type Props = {
+  navigation: any;
+};
 
 const icons = {
-    config : configIcon,
-    search : searchIcon
-}
+  config: configIcon,
+  search: searchIcon,
+};
 
+const Home: React.FC<Props> = ({ navigation }) => {
+  const [textSearch, setTextSearch] = useState<string>('');
+  const [pag, setPag] = useState<number>(-1);
 
-const Home = ({navigation})=>{
-    const [textSearch, setTextSearch] = useState("");
-    const llamadasApi = ()=>{
-        if(textSearch.length===0){
-            return Memes.listarConFiltro("Coquimbo");
-        }else{
-            return Memes.listarConFiltro(textSearch);
-        }
+  const llamadasApi = (): Promise<any> => {
+    setPag(pag + 1);
+    return Memes.listarConFiltro(textSearch, pag);
+  };
+
+  const Header = () => {
+    return (
+      <View style={homeStyles.header}>
+        <TouchableOpacity onPress={() => navigation.navigate('AccessCamera')}>
+          <Image source={icons.config} style={homeStyles.icon} onPress={() => Keyboard.dismiss()} />
+        </TouchableOpacity>
+        <SearchBar
+          search={textSearch}
+          setSearch={(val: string) => {
+            Keyboard.dismiss();
+            setTextSearch(val);
+          }}
+          onPress={() => Keyboard.dismiss()}
+        />
+      </View>
+    );
+  };
+
+  const transformacionDatos = (data: any = {}): any[] => {
+    if (data !== null && typeof data.data !== 'undefined') {
+      return data.data.children
+        .filter((v: any) => v.data.post_hint === 'image')
+        .map((v: any, key: number) => {
+          const { title, url, link_flair_text, Shitposting, score, num_comments, post_hint } = v.data;
+          return { title, url, link_flair_text, Shitposting, score, num_comments, id: key };
+        });
+    } else {
+      return [];
     }
-    const Header = React.memo(()=>{
-        return <View style={homeStyles.header}>
-                <TouchableOpacity onPress={()=>navigation.navigate('AccessCamera')}> 
-                    <Image source={icons.config} style={homeStyles.icon} />
-                </TouchableOpacity>
-                <SearchBar search={textSearch} setSearch={setTextSearch} onSubmitEditing={() => Keyboard.dismiss()} />
+  };
 
-            </View>
-    });
-    const transformacionDatos = (data = {})=>{
-        if(data !== null){
-            if(typeof data.data !== 'undefined'){
-                const filter = data.data.children.filter(v=>v.data.post_hint === 'image').map((v, key) =>{
-                    const { title, url, link_flair_text, Shitposting, score, num_comments, post_hint } = v.data;
-                    return { title, url, link_flair_text, Shitposting, score, num_comments, id : key };
-                });
-                return filter;
-            }
-        }
-    }
-    return <CargaDatos 
-                        transformacionDatos={transformacionDatos} 
-                        api={llamadasApi} 
-                        textSearch={textSearch}
-                        Header={Header} 
-                        navigation={navigation}
-                        FlatList={FlatListHome}
-                        />
-}
+  return (
+    <CargaDatos
+      transformacionDatos={transformacionDatos}
+      api={llamadasApi}
+      textSearch={textSearch}
+      Header={Header}
+      navigation={navigation}
+      FlatList={FlatListHome}
+      onPress={() => Keyboard.dismiss()}
+    />
+  );
+};
+
 export default Home;

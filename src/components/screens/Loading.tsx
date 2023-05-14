@@ -7,7 +7,7 @@ const Loading = ({ navigation })=>{
     useEffect(() => {
         // Simulación de una carga de datos con una espera de 3 segundos
         setTimeout(() => {
-            navigation.navigate('Home');
+            navigation.navigate('AccessCamera');
         }, 3000);
     }, []);
     return(
