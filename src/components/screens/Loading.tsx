@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Image } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
 import backgroundImage from '../../assets/bitmap3.png';
 import logoImage from '../../assets/reddit11.png';
 import loadingStyles from '../styles/loadingStyles';
@@ -16,7 +15,6 @@ const Loading = ({ navigation })=>{
             <ImageBackground
                 source={backgroundImage}
                 style={loadingStyles.imageBackground}>
-                <Spinner visible={true} />
                 <Image source={logoImage} style={loadingStyles.logo}/>
                 <Text style={loadingStyles.text}>Cargando</Text>
             </ImageBackground>

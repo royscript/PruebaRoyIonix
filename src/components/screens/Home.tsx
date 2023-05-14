@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { View, Image, Text, FlatList, TouchableOpacity, TextInput, RefreshControl  } from 'react-native';
+import { View, Image, Text, TouchableOpacity, TextInput  } from 'react-native';
 import homeStyles from '../styles/homeStyles';
 import configIcon from '../../assets/bitmap.png';
 import searchIcon from '../../assets/search.png';
@@ -55,7 +55,7 @@ const Home = ({ navigation })=>{
         return <View style={homeStyles.container}>
                         <Header navigation={navigation}/>
                         <Spinner visible={loading} />
-                        {loading ? <Text>Cargando...</Text> : null}
+                        <Text>Cargando...</Text>
                 </View>
     }else if(error !== null){
         return <View style={homeStyles.container}>

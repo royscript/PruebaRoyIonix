@@ -5,14 +5,13 @@ function useFetch(Api : any) {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [updateEndPoint, setUpdateEndPoint] = useState('');
   async function fetchData() {
     setLoading(true);
     try {
       const response = await Api();
       if (!response.ok) {
         const errorText = await response.text();
-        //throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+        throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
       }
       const result = await response.json();
       setData(result);
@@ -28,11 +27,8 @@ function useFetch(Api : any) {
   useEffect(() => {
     fetchData();
   }, []);
-  useEffect(()=>{
-    //console.log(data);
-  },[data])
 
-  return [data, fetchData, loading, error, setUpdateEndPoint];
+  return [data, fetchData, loading, error];
 }
 
 export default useFetch;

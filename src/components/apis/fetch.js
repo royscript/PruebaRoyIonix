@@ -1,7 +1,6 @@
 export default async function (url, updateEndPoint = '', method = 'GET') {
     const server = 'https://www.reddit.com/r/';
     var errores = '';
-    var dataRescatada = [];
     try {
         const options = {
         method,
