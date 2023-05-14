@@ -23,8 +23,10 @@ const CargaDatos = ({ navigation, transformacionDatos, api, Header, FlatList, te
   return (
     <View style={homeStyles.container}>
       <Header />
-      {error !== null ? (
-        <Text style={loadingStyles.text}>Error: {JSON.stringify(error)}</Text>
+      {(error !== null) || (loading === true) ? (
+        <Text style={loadingStyles.text}>
+          {loading? 'Cargando' : `Error : ${JSON.stringify(error)}`}
+        </Text>
       ) : (
         <>
           <FlatList dataFilter={dataFilter} loading={loading} fetchData={fetchData} />
