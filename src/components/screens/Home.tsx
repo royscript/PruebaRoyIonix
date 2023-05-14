@@ -12,7 +12,7 @@ const icons = {
     config : configIcon,
     search : searchIcon
 }
-const Header = ()=>{
+const Header = ({navigation})=>{
     return <View style={homeStyles.header}>
             <TouchableOpacity onPress={()=>navigation.navigate('AccessCamera')}> 
                 <Image source={icons.config} style={homeStyles.icon} />
@@ -53,19 +53,19 @@ const Home = ({ navigation })=>{
     },[data])
     if(loading){
         return <View style={homeStyles.container}>
-                        <Header/>
+                        <Header navigation={navigation}/>
                         <Spinner visible={loading} />
                         {loading ? <Text>Cargando...</Text> : null}
                 </View>
     }else if(error !== null){
         return <View style={homeStyles.container}>
-                    <Header/>
+                    <Header navigation={navigation}/>
                     <Text>Error : { JSON.stringify(error)}</Text>
             </View>
     }else{
         return(
             <View style={homeStyles.container}>
-                <Header/>
+                <Header navigation={navigation}/>
                 <FlatListHome
                     dataFilter={dataFilter}
                     loading={loading}
