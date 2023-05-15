@@ -18,7 +18,6 @@ import notificationImage from '../../assets/artwork2.png';
 import gpsImage from '../../assets/artwork1.png';
 import { useEffect, useState } from 'react';
 import solicitudesStyles from '../styles/solicitudesStyles';
-
 ```
 * Text, View e Image son componentes nativos de React Native que se utilizan para renderizar texto, contenedores y imágenes, respectivamente.
 * usePermisos es un hook personalizado que se utiliza para dar permisos y conocer el estado de los permisos.
@@ -48,22 +47,22 @@ const accessInformation = {
         background: gpsImage
     }
 };
-
-
 ```
 
 * accessInformation es un objeto que contiene información para cada pantalla de permisos. 
 * Cada objeto dentro de este objeto tiene tres propiedades: title, description y background, que corresponden al título, descripción e imagen de fondo que se mostrará en cada pantalla de permisos.
 
 <h1>Componente Solicitudes:</h1>
+Muestra de código:
+   
 ```javascript
-const Solicitudes = (props: any) => {
-    const { tipoNotificacion, siguientePantalla, setPermiso } = props;
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [image, setImage] = useState(null);
 
-    useEffect(() => {
+    const Solicitudes = (props : any)=>{
+    const { tipoNotificacion, siguientePantalla, setPermiso } = props;
+    const [ title, setTitle ] = useState('');
+    const [ description, setDescription ] = useState('');
+    const [ image, setImage ] = useState(null);
+    useEffect(()=>{
         /* Dependiendo del permiso enviado es la pantalla y la solicitud que se muestra */
         switch (tipoNotificacion) {
             case 'CAMERA':
@@ -84,7 +83,47 @@ const Solicitudes = (props: any) => {
             default:
                 break;
         }
-    },
+    },[])
+    /*
+    hook usePermisos : sirve para dar permisos y conocer el estado de los permisos
+    permisos : muestra el estado del permiso : true (permitido), false (no permitido)
+    setRecargar : permite recargar los permisos
+    */
+    const [ permisos, setRecargar ] = usePermisos(tipoNotificacion,siguientePantalla);
+    const handleRecargar = ()=>{
+        setRecargar(true);
+    }
+    useEffect(()=>{
+        setPermiso(permisos)
+    },[permisos])
+    return (
+        <View style={solicitudesStyles.container}>
+            <View style={solicitudesStyles.section}>
+            <View style={solicitudesStyles.imageContainer}>
+                { image&&(
+                    <Image source={image} style={solicitudesStyles.image} />
+                ) }
+            </View>
+            </View>
+            <View style={solicitudesStyles.section}>
+            <View style={solicitudesStyles.titleContainer}>
+                <Text style={solicitudesStyles.title}>{title}</Text>
+            </View>
+            </View>
+            <View style={solicitudesStyles.section}>
+            <View style={solicitudesStyles.textContainer}>
+                <Text style={solicitudesStyles.text}>{description}</Text>
+            </View>
+            
+            </View>
+            <View style={solicitudesStyles.section}>
+            <View style={solicitudesStyles.buttonContainer}>
+                <ButtonGradient title={permisos?'Enable':'Allow'} onPress={()=>handleRecargar()}/>
+                <ButtonWhite title='Cancel' onPress={()=>siguientePantalla()}/>
+            </View>
+            </View>
+        </View>
+    );
 
 ```
 
@@ -120,7 +159,6 @@ function Notification({ navigation }): JSX.Element {
             />
 }
 export default Notification;
-
 ```
 
 <h1>Componente NoResults</h1>
@@ -158,7 +196,6 @@ const NoResults = ()=>{
     )
 }
 export default NoResults;
-
 ```
 
 <h1>Loading</h1>
@@ -176,7 +213,6 @@ function MainScreen({ navigation }) {
     <Loading navigation={navigation} />
   );
 }
-
 ```
 
 <h1>Home</h1>
@@ -193,7 +229,6 @@ function MainScreen({ navigation }) {
     <Home navigation={navigation} />
   );
 }
-
 ```
 
 <h1>GPS</h1>
@@ -210,8 +245,6 @@ function MainScreen({ navigation }) {
     <Gps navigation={navigation} />
   );
 }
-
-
 ```
 
 <h1>Item</h1>
@@ -294,7 +327,6 @@ function App() {
     </View>
   );
 }
-
 ```
 En este ejemplo, se utiliza el hook usePermisos para solicitar permisos para la cámara. Cuando se otorgan los permisos, se ejecuta la función siguientePantalla. La función volverAtras se utiliza para forzar la recarga del hook y volver a solicitar los permisos.
 
