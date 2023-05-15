@@ -1,5 +1,6 @@
 # PruebaRoyIonix
-Documentación proyecto, desarrollado en React Native Cli, SDK 18
+Documentación proyecto, desarrollado en React Native Cli, SDK 18.
+Se utilizó redux para guardar el estado de los permisos de la cámara, gps y notificaciones.
 
 <h1>Componentes</h1> 
 <h1>Solicitudes</h1>
